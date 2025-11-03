@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import DashboardPortal from './components/DashboardPortal';
 import BookingSection from './components/BookingSection';
+import FAQ from './components/FAQ';
 import ServicesPage from './components/ServicesPage';
 import CaseStudiesPage from './components/CaseStudiesPage';
 import TestimonialsPage from './components/TestimonialsPage';
@@ -27,6 +28,7 @@ export default function App() {
                 <Hero />
                 <DashboardPortal />
                 <BookingSection />
+                <FAQ />
               </>
             )}
           />
