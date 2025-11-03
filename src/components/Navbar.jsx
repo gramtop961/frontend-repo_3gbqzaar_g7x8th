@@ -1,30 +1,55 @@
 import React from 'react';
-
-const NavItem = ({ href, label }) => (
-  <a
-    href={href}
-    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-black hover:bg-gray-100 rounded-md transition"
-  >
-    {label}
-  </a>
-);
+import { Menu } from 'lucide-react';
 
 export default function Navbar() {
+  const [open, setOpen] = React.useState(false);
+
+  const links = [
+    { href: '#dashboard', label: 'Dashboard' },
+    { href: '#services', label: 'Services' },
+    { href: '#process', label: 'Process' },
+    { href: '#faq', label: 'FAQ' },
+    { href: '#philosophy', label: 'Philosophy' },
+    { href: '#cases', label: 'Case Studies' },
+    { href: '#testimonials', label: 'Testimonials' },
+    { href: '#contact', label: 'Contact' },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-        <a href="#home" className="font-semibold tracking-tight">AI Studio</a>
-        <nav className="flex items-center gap-1">
-          <NavItem href="#dashboard" label="Dashboard" />
-          <NavItem href="#services" label="Services" />
-          <NavItem href="#process" label="Process" />
-          <NavItem href="#faq" label="FAQ" />
-          <NavItem href="#philosophy" label="Philosophy" />
-          <NavItem href="#cases" label="Case Studies" />
-          <NavItem href="#testimonials" label="Testimonials" />
-          <NavItem href="#contact" label="Book Now" />
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-neutral-200">
+      <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+        <a href="#dashboard" className="font-semibold tracking-tight">Flames Studio</a>
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="hover:text-neutral-700 transition-colors">
+              {l.label}
+            </a>
+          ))}
         </nav>
+        <button
+          className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-md border border-neutral-200"
+          aria-label="Toggle menu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <Menu size={18} />
+        </button>
       </div>
+      {open && (
+        <div className="md:hidden border-t border-neutral-200">
+          <div className="mx-auto max-w-6xl px-4 py-3 grid grid-cols-2 gap-3 text-sm">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="py-2"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </header>
   );
 }

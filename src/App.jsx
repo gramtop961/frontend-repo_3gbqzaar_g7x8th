@@ -6,7 +6,7 @@ import Contact from './components/Contact.jsx';
 
 function App() {
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-white text-black scroll-smooth">
       <Navbar />
       <main>
         <Hero />

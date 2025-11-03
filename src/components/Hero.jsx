@@ -1,52 +1,108 @@
 import React from 'react';
 import Spline from '@splinetool/react-spline';
 
+// Local error boundary to prevent Spline load errors from crashing the app
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error, info) {
+    // eslint-disable-next-line no-console
+    console.error('Spline render error:', error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 export default function Hero() {
-  return (
-    <section id="home" className="relative w-full">
-      <div className="relative h-[80vh] w-full overflow-hidden bg-white">
-        <div className="absolute inset-0">
+  const [splineFailed, setSplineFailed] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
+  const cover = (
+    <div className="relative h-[75vh] w-full overflow-hidden">
+      {!splineFailed && mounted && (
+        <ErrorBoundary
+          fallback={
+            <div className="absolute inset-0 bg-gradient-to-b from-white to-neutral-100" />
+          }
+        >
           <Spline
-            scene="https://prod.spline.design/0a8b7c7e-fake-demo/scene.splinecode"
+            scene="https://prod.spline.design/Qe6dlWJktclXcUBS/scene.splinecode"
             style={{ width: '100%', height: '100%' }}
+            onLoad={() => {
+              // Loaded successfully
+            }}
+            onError={() => setSplineFailed(true)}
           />
-        </div>
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/70 via-white/60 to-white"></div>
-        <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center text-center">
-          <div className="space-y-4">
-            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">Enterprise AI Solutions</h1>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-              We design, deploy, and scale intelligent assistants and automation for your business.
-            </p>
-            <div className="flex items-center justify-center gap-3">
-              <a href="#contact" className="px-5 py-2.5 rounded-md bg-black text-white text-sm font-medium hover:bg-gray-900 transition">Book a Demo</a>
-              <a href="#services" className="px-5 py-2.5 rounded-md border border-gray-300 text-sm font-medium hover:bg-gray-50 transition">Our Services</a>
-            </div>
+        </ErrorBoundary>
+      )}
+
+      {(splineFailed || !mounted) && (
+        <div className="absolute inset-0 bg-gradient-to-b from-white to-neutral-100" />
+      )}
+
+      {/* Non-blocking soft white gradient overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-transparent" />
+
+      {/* Content */}
+      <div className="relative mx-auto max-w-6xl px-4 h-full flex flex-col justify-center">
+        <div className="max-w-2xl">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+            Elevate your product with modern, human-centered design
+          </h1>
+          <p className="mt-4 text-neutral-600 text-base md:text-lg">
+            We craft beautiful, performant experiences and back them with real business impact.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a href="#contact" className="inline-flex items-center px-5 py-3 rounded-md bg-black text-white shadow">
+              Book a call
+            </a>
+            <a href="#services" className="inline-flex items-center px-5 py-3 rounded-md border border-neutral-300 bg-white">
+              Explore services
+            </a>
           </div>
         </div>
-        <div id="dashboard" className="absolute top-4 right-4 z-20 hidden md:block">
-          <div className="w-[360px] rounded-xl border border-gray-200 bg-white shadow-sm">
-            <div className="p-4 border-b border-gray-100">
-              <p className="text-sm font-medium">Live Metrics</p>
-            </div>
-            <div className="p-4 grid grid-cols-3 gap-3">
-              {[
-                { label: 'Sessions', value: '12.4k' },
-                { label: 'CSAT', value: '98%' },
-                { label: 'SLA', value: '1.2m' },
-              ].map((m) => (
-                <div key={m.label} className="rounded-lg bg-gray-50 p-3">
-                  <p className="text-[10px] text-gray-500">{m.label}</p>
-                  <p className="text-sm font-semibold">{m.value}</p>
-                </div>
-              ))}
-            </div>
-            <div className="p-4 pt-0">
-              <div className="h-20 w-full rounded-md bg-gradient-to-r from-gray-100 to-gray-200" />
+
+        {/* Dashboard preview card (top-right) */}
+        <div className="absolute right-4 top-4 md:right-8 md:top-8">
+          <div className="rounded-xl border border-neutral-200 bg-white/90 backdrop-blur shadow-sm p-4 w-64">
+            <div className="text-sm font-medium">Live Metrics</div>
+            <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <div className="text-neutral-500">CTR</div>
+                <div className="font-semibold">4.8%</div>
+              </div>
+              <div>
+                <div className="text-neutral-500">Signups</div>
+                <div className="font-semibold">+312</div>
+              </div>
+              <div>
+                <div className="text-neutral-500">Load</div>
+                <div className="font-semibold">1.2s</div>
+              </div>
+              <div>
+                <div className="text-neutral-500">NPS</div>
+                <div className="font-semibold">68</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+
+  return (
+    <section id="dashboard" aria-label="Hero">
+      {cover}
     </section>
   );
 }

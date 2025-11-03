@@ -1,170 +1,194 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function SectionWrapper({ id, title, children, subtitle }) {
+export default function Sections() {
   return (
-    <section id={id} className="w-full py-16 border-t border-gray-100 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-black">{title}</h2>
-          {subtitle ? (
-            <p className="mt-2 text-gray-600 max-w-3xl">{subtitle}</p>
-          ) : null}
-        </div>
-        {children}
+    <div className="mx-auto max-w-6xl px-4">
+      <Services />
+      <Process />
+      <FAQ />
+      <Philosophy />
+      <CaseStudies />
+      <Testimonials />
+    </div>
+  );
+}
+
+function SectionHeader({ title, subtitle, id }) {
+  return (
+    <div id={id} className="pt-20">
+      <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{title}</h2>
+      {subtitle && (
+        <p className="mt-2 text-neutral-600 max-w-2xl">{subtitle}</p>
+      )}
+    </div>
+  );
+}
+
+function Card({ children }) {
+  return (
+    <div className="rounded-lg border border-neutral-200 bg-white shadow-sm p-5">
+      {children}
+    </div>
+  );
+}
+
+function Services() {
+  const items = [
+    {
+      title: 'Product Strategy',
+      desc: 'Define goals, audiences, and success metrics to focus your roadmap.',
+    },
+    {
+      title: 'UX/UI Design',
+      desc: 'Design systems and interfaces that are beautiful and usable.',
+    },
+    {
+      title: 'Prototyping',
+      desc: 'Validate ideas quickly with interactive prototypes and testing.',
+    },
+    {
+      title: 'Frontend Engineering',
+      desc: 'Ship fast with modern, performant web technologies.',
+    },
+  ];
+  return (
+    <section aria-label="Services">
+      <SectionHeader
+        id="services"
+        title="Services"
+        subtitle="Full-stack product design and development to accelerate your roadmap."
+      />
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {items.map((it) => (
+          <Card key={it.title}>
+            <div className="font-semibold">{it.title}</div>
+            <p className="mt-2 text-sm text-neutral-600">{it.desc}</p>
+          </Card>
+        ))}
       </div>
     </section>
   );
 }
 
-export default function Sections() {
-  const [openIndex, setOpenIndex] = useState(0);
-
-  const faqs = [
-    {
-      q: 'What problems do you solve?',
-      a: 'We design and deploy AI copilots and automations that reduce handle time, improve CSAT, and unlock new revenue across support, sales, and ops.'
-    },
-    {
-      q: 'How fast can we launch?',
-      a: 'Most pilots go live in 2–3 weeks with iterative improvements shipped weekly after baseline KPIs are met.'
-    },
-    {
-      q: 'How do you measure success?',
-      a: 'We establish a shared scorecard covering CSAT, resolution rate, AHT, and deflection, and instrument every flow end-to-end.'
-    },
+function Process() {
+  const steps = [
+    { n: 1, t: 'Discover', d: 'Audit, research, and align on goals.' },
+    { n: 2, t: 'Define', d: 'Scope, success metrics, and roadmap.' },
+    { n: 3, t: 'Design', d: 'Wireframes, visual design, and prototypes.' },
+    { n: 4, t: 'Deliver', d: 'Implementation, QA, and iteration.' },
   ];
-
   return (
-    <div className="bg-white text-black">
-      <SectionWrapper
-        id="services"
-        title="Services"
-        subtitle="Strategy, implementation, and ongoing optimization—tailored to your stack and goals."
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            {
-              title: 'AI Assistants',
-              desc: 'Custom copilots for support, sales, and internal ops with retrieval and tool use.'
-            },
-            {
-              title: 'Automation',
-              desc: 'Workflow automation that connects your CRM, helpdesk, data warehouse, and apps.'
-            },
-            {
-              title: 'Analytics',
-              desc: 'Dashboards and evaluations that track impact, quality, and safety.'
-            },
-          ].map((card) => (
-            <div key={card.title} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition">
-              <h3 className="text-lg font-semibold">{card.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{card.desc}</p>
-            </div>
-          ))}
-        </div>
-      </SectionWrapper>
+    <section aria-label="Process">
+      <SectionHeader id="process" title="Our Process" />
+      <div className="mt-6 grid gap-4 md:grid-cols-4">
+        {steps.map((s) => (
+          <Card key={s.n}>
+            <div className="text-sm text-neutral-500">Step {s.n}</div>
+            <div className="mt-1 font-semibold">{s.t}</div>
+            <p className="mt-2 text-sm text-neutral-600">{s.d}</p>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-      <SectionWrapper
-        id="process"
-        title="Process"
-        subtitle="A pragmatic, outcome-focused approach that derisks deployment."
-      >
-        <ol className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[
-            { step: '1. Discover', desc: 'Scope goals, constraints, and integration points.' },
-            { step: '2. Design', desc: 'Craft flows, prompts, and safety rails with evals.' },
-            { step: '3. Ship', desc: 'Implement, integrate, and launch a production pilot.' },
-            { step: '4. Scale', desc: 'Iterate, automate, and expand coverage with guardrails.' },
-          ].map((s) => (
-            <li key={s.step} className="rounded-xl border border-gray-200 p-5 bg-white">
-              <p className="text-sm font-medium text-gray-500">{s.step}</p>
-              <p className="mt-1 text-sm text-gray-700">{s.desc}</p>
-            </li>
-          ))}
-        </ol>
-      </SectionWrapper>
+function FAQ() {
+  const [open, setOpen] = React.useState(0);
+  const qs = [
+    {
+      q: 'How fast can we start?',
+      a: 'We usually kick off within 1–2 weeks after alignment.',
+    },
+    {
+      q: 'Do you work with startups or enterprises?',
+      a: 'Both. We adapt process and artifacts to your team size and needs.',
+    },
+    { q: 'What does success look like?', a: 'Clear metrics, shipped work, and happier users.' },
+  ];
+  return (
+    <section aria-label="FAQ">
+      <SectionHeader id="faq" title="Client FAQ" />
+      <div className="mt-6 space-y-3">
+        {qs.map((item, idx) => (
+          <div key={idx} className="rounded-lg border border-neutral-200 bg-white">
+            <button
+              type="button"
+              className="w-full text-left p-4 flex items-center justify-between"
+              onClick={() => setOpen(open === idx ? -1 : idx)}
+            >
+              <span className="font-medium">{item.q}</span>
+              <span className="text-neutral-500">{open === idx ? '−' : '+'}</span>
+            </button>
+            {open === idx && (
+              <div className="px-4 pb-4 text-sm text-neutral-600">{item.a}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-      <SectionWrapper
-        id="faq"
-        title="Client FAQ"
-        subtitle="Clear answers to the most common questions we hear."
-      >
-        <div className="divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white">
-          {faqs.map((item, idx) => (
-            <div key={item.q} className="p-5">
-              <button
-                className="w-full flex items-center justify-between text-left"
-                onClick={() => setOpenIndex(openIndex === idx ? -1 : idx)}
-                aria-expanded={openIndex === idx}
-              >
-                <span className="font-medium">{item.q}</span>
-                <span className="ml-4 text-gray-500">{openIndex === idx ? '−' : '+'}</span>
-              </button>
-              {openIndex === idx && (
-                <p className="mt-3 text-sm text-gray-700">{item.a}</p>
-              )}
-            </div>
-          ))}
-        </div>
-      </SectionWrapper>
+function Philosophy() {
+  const items = [
+    { t: 'User-first', d: 'Empathy and evidence drive our decisions.' },
+    { t: 'Clarity', d: 'Simple beats clever. Communicate, don’t decorate.' },
+    { t: 'Momentum', d: 'Ship, learn, iterate. Results compound over time.' },
+  ];
+  return (
+    <section aria-label="Philosophy">
+      <SectionHeader id="philosophy" title="Our Philosophy" />
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        {items.map((it) => (
+          <Card key={it.t}>
+            <div className="font-semibold">{it.t}</div>
+            <p className="mt-2 text-sm text-neutral-600">{it.d}</p>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-      <SectionWrapper
-        id="philosophy"
-        title="Our Philosophy"
-        subtitle="Ship value fast, measure honestly, and earn the right to scale."
-      >
-        <div className="prose prose-sm max-w-none text-gray-700">
-          <p>
-            We believe AI belongs in production—measured, safe, and customer-first. We prioritize
-            reliability over hype and transparency over black boxes. Every engagement is designed to
-            create compounding leverage for your team.
-          </p>
-        </div>
-      </SectionWrapper>
+function CaseStudies() {
+  const cases = [
+    { t: 'SaaS Onboarding', d: 'Cut time-to-value by 42% with a guided checklist.' },
+    { t: 'E‑commerce Checkout', d: 'Boosted conversion 18% by simplifying steps.' },
+    { t: 'B2B Dashboard', d: 'Surfaced insights and reduced churn by 9%.' },
+  ];
+  return (
+    <section aria-label="Case Studies">
+      <SectionHeader id="cases" title="Case Studies" />
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        {cases.map((c) => (
+          <Card key={c.t}>
+            <div className="font-semibold">{c.t}</div>
+            <p className="mt-2 text-sm text-neutral-600">{c.d}</p>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-      <SectionWrapper
-        id="cases"
-        title="Case Studies"
-        subtitle="A sampling of outcomes from recent deployments."
-      >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { kpi: '−43% AHT', company: 'B2C Support', blurb: 'Virtual agent handles Tier-1 across 6 channels.' },
-            { kpi: '+22% Win Rate', company: 'SaaS Sales', blurb: 'Lead qual copilot accelerates discovery.' },
-            { kpi: '95% CSAT', company: 'Fintech Ops', blurb: 'Automations resolve routine tasks end-to-end.' },
-          ].map((c) => (
-            <article key={c.kpi} className="rounded-xl border border-gray-200 p-6 bg-white shadow-sm">
-              <p className="text-sm font-semibold">{c.kpi}</p>
-              <p className="text-sm text-gray-500">{c.company}</p>
-              <p className="mt-2 text-sm text-gray-700">{c.blurb}</p>
-            </article>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper
-        id="testimonials"
-        title="Testimonials"
-        subtitle="What partners say about working with us."
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            {
-              quote: 'The team delivered measurable impact in weeks, not months—our customers noticed immediately.',
-              name: 'VP of Support, Consumer App'
-            },
-            {
-              quote: 'They balanced safety and speed perfectly. The automation ROI was undeniable.',
-              name: 'Head of Ops, Fintech'
-            },
-          ].map((t, i) => (
-            <blockquote key={i} className="rounded-xl border border-gray-200 p-6 bg-white shadow-sm">
-              <p className="text-sm text-gray-800">“{t.quote}”</p>
-              <p className="mt-3 text-xs text-gray-500">{t.name}</p>
-            </blockquote>
-          ))}
-        </div>
-      </SectionWrapper>
-    </div>
+function Testimonials() {
+  const ts = [
+    { n: 'Ava R.', q: 'They delivered faster than any team we’ve worked with.' },
+    { n: 'Noah S.', q: 'Elegant design with measurable impact on our KPIs.' },
+    { n: 'Mia K.', q: 'Thoughtful partners who really listened to users.' },
+  ];
+  return (
+    <section aria-label="Testimonials">
+      <SectionHeader id="testimonials" title="Testimonials" />
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        {ts.map((t) => (
+          <div key={t.n} className="rounded-lg border border-neutral-200 bg-white p-5 shadow-sm">
+            <p className="text-neutral-800">“{t.q}”</p>
+            <div className="mt-3 text-sm text-neutral-600">— {t.n}</div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
