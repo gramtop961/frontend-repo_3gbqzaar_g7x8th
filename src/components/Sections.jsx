@@ -1,106 +1,170 @@
-import React from 'react';
-import { Bot, PhoneCall, Calendar, Shield, Workflow } from 'lucide-react';
+import React, { useState } from 'react';
 
-export default function Sections() {
+function SectionWrapper({ id, title, children, subtitle }) {
   return (
-    <section id="services" className="bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-        {/* Services Overview */}
-        <div className="space-y-8">
-          <h2 className="text-3xl md:text-4xl font-extrabold">Services & Automations</h2>
-          <p className="text-black/70 max-w-prose">
-            We design, deploy, and maintain AI systems that reduce front-desk load and elevate patient experience.
-            Our highlights are shown in bold black so you can quickly see where we drive the most impact.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card title="AI Receptionist" icon={Bot}>
-              Answers calls, handles FAQs, books/changes appointments, and routes urgent cases.
-            </Card>
-            <Card title="Smart Scheduling" icon={Calendar}>
-              Waitlist fill, no-show recovery, automated reminders across SMS, email, and voice.
-            </Card>
-            <Card title="Call & Lead Capture" icon={PhoneCall}>
-              24/7 intake for new patients with insurance pre-check and triage questions.
-            </Card>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card title="Workflow Automation" icon={Workflow}>
-              Post-visit follow-ups, treatment-plan nudges, payment links, and satisfaction surveys.
-            </Card>
-            <Card title="Privacy & Security" icon={Shield}>
-              HIPAA-aware pipelines, role-based access, and audit-ready logging.
-            </Card>
-          </div>
+    <section id={id} className="w-full py-16 border-t border-gray-100 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-black">{title}</h2>
+          {subtitle ? (
+            <p className="mt-2 text-gray-600 max-w-3xl">{subtitle}</p>
+          ) : null}
         </div>
-
-        {/* Process */}
-        <div id="process" className="space-y-6">
-          <h2 className="text-3xl md:text-4xl font-extrabold">Our Process</h2>
-          <ol className="grid grid-cols-1 md:grid-cols-4 gap-6 list-decimal md:list-none">
-            <Step index={1} title="Assess">
-              We map front-desk tasks, call flows, and patient touchpoints.
-            </Step>
-            <Step index={2} title="Prototype">
-              Quick pilot that plugs into your calendar and phone system.
-            </Step>
-            <Step index={3} title="Deploy">
-              Go live with guardrails, analytics, and team training.
-            </Step>
-            <Step index={4} title="Optimize">
-              Continuous improvement to boost conversion and satisfaction.
-            </Step>
-          </ol>
-        </div>
-
-        {/* Case Study + Philosophy */}
-        <div id="case-study" className="space-y-6">
-          <h2 className="text-3xl md:text-4xl font-extrabold">Case Study</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold">Urban Smile Dental — AI Receptionist Rollout</h3>
-              <ul className="list-disc pl-5 space-y-2 text-black/80">
-                <li><strong className="text-black">42% faster</strong> average call resolution within 3 weeks</li>
-                <li><strong className="text-black">18% increase</strong> in booked consults from web leads</li>
-                <li><strong className="text-black">35% fewer</strong> no-shows via automated reminders</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-black/10 p-6 bg-black text-white">
-              <p className="text-sm opacity-90">Our philosophy</p>
-              <h3 className="text-2xl font-extrabold mb-2">Human-first automation</h3>
-              <p className="text-white/90">
-                Automation should feel personal, not robotic. We combine reliable guardrails with empathetic dialog
-                so your patients always feel cared for while your team wins back time.
-              </p>
-            </div>
-          </div>
-        </div>
+        {children}
       </div>
     </section>
   );
 }
 
-function Card({ title, icon: Icon, children }) {
-  return (
-    <div className="rounded-2xl border border-black/10 p-6 hover:shadow-sm transition-shadow">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="size-9 rounded-full bg-black text-white flex items-center justify-center">
-          <Icon className="size-5" />
-        </div>
-        <h3 className="text-lg font-bold">{title}</h3>
-      </div>
-      <p className="text-black/70">{children}</p>
-    </div>
-  );
-}
+export default function Sections() {
+  const [openIndex, setOpenIndex] = useState(0);
 
-function Step({ index, title, children }) {
+  const faqs = [
+    {
+      q: 'What problems do you solve?',
+      a: 'We design and deploy AI copilots and automations that reduce handle time, improve CSAT, and unlock new revenue across support, sales, and ops.'
+    },
+    {
+      q: 'How fast can we launch?',
+      a: 'Most pilots go live in 2–3 weeks with iterative improvements shipped weekly after baseline KPIs are met.'
+    },
+    {
+      q: 'How do you measure success?',
+      a: 'We establish a shared scorecard covering CSAT, resolution rate, AHT, and deflection, and instrument every flow end-to-end.'
+    },
+  ];
+
   return (
-    <li className="rounded-2xl border border-black/10 p-6">
-      <div className="flex items-center gap-3 mb-2">
-        <span className="inline-flex items-center justify-center size-8 rounded-full bg-black text-white text-sm font-bold">{index}</span>
-        <h3 className="text-lg font-bold">{title}</h3>
-      </div>
-      <p className="text-black/70">{children}</p>
-    </li>
+    <div className="bg-white text-black">
+      <SectionWrapper
+        id="services"
+        title="Services"
+        subtitle="Strategy, implementation, and ongoing optimization—tailored to your stack and goals."
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              title: 'AI Assistants',
+              desc: 'Custom copilots for support, sales, and internal ops with retrieval and tool use.'
+            },
+            {
+              title: 'Automation',
+              desc: 'Workflow automation that connects your CRM, helpdesk, data warehouse, and apps.'
+            },
+            {
+              title: 'Analytics',
+              desc: 'Dashboards and evaluations that track impact, quality, and safety.'
+            },
+          ].map((card) => (
+            <div key={card.title} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+              <h3 className="text-lg font-semibold">{card.title}</h3>
+              <p className="mt-2 text-sm text-gray-600">{card.desc}</p>
+            </div>
+          ))}
+        </div>
+      </SectionWrapper>
+
+      <SectionWrapper
+        id="process"
+        title="Process"
+        subtitle="A pragmatic, outcome-focused approach that derisks deployment."
+      >
+        <ol className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {[
+            { step: '1. Discover', desc: 'Scope goals, constraints, and integration points.' },
+            { step: '2. Design', desc: 'Craft flows, prompts, and safety rails with evals.' },
+            { step: '3. Ship', desc: 'Implement, integrate, and launch a production pilot.' },
+            { step: '4. Scale', desc: 'Iterate, automate, and expand coverage with guardrails.' },
+          ].map((s) => (
+            <li key={s.step} className="rounded-xl border border-gray-200 p-5 bg-white">
+              <p className="text-sm font-medium text-gray-500">{s.step}</p>
+              <p className="mt-1 text-sm text-gray-700">{s.desc}</p>
+            </li>
+          ))}
+        </ol>
+      </SectionWrapper>
+
+      <SectionWrapper
+        id="faq"
+        title="Client FAQ"
+        subtitle="Clear answers to the most common questions we hear."
+      >
+        <div className="divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white">
+          {faqs.map((item, idx) => (
+            <div key={item.q} className="p-5">
+              <button
+                className="w-full flex items-center justify-between text-left"
+                onClick={() => setOpenIndex(openIndex === idx ? -1 : idx)}
+                aria-expanded={openIndex === idx}
+              >
+                <span className="font-medium">{item.q}</span>
+                <span className="ml-4 text-gray-500">{openIndex === idx ? '−' : '+'}</span>
+              </button>
+              {openIndex === idx && (
+                <p className="mt-3 text-sm text-gray-700">{item.a}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </SectionWrapper>
+
+      <SectionWrapper
+        id="philosophy"
+        title="Our Philosophy"
+        subtitle="Ship value fast, measure honestly, and earn the right to scale."
+      >
+        <div className="prose prose-sm max-w-none text-gray-700">
+          <p>
+            We believe AI belongs in production—measured, safe, and customer-first. We prioritize
+            reliability over hype and transparency over black boxes. Every engagement is designed to
+            create compounding leverage for your team.
+          </p>
+        </div>
+      </SectionWrapper>
+
+      <SectionWrapper
+        id="cases"
+        title="Case Studies"
+        subtitle="A sampling of outcomes from recent deployments."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { kpi: '−43% AHT', company: 'B2C Support', blurb: 'Virtual agent handles Tier-1 across 6 channels.' },
+            { kpi: '+22% Win Rate', company: 'SaaS Sales', blurb: 'Lead qual copilot accelerates discovery.' },
+            { kpi: '95% CSAT', company: 'Fintech Ops', blurb: 'Automations resolve routine tasks end-to-end.' },
+          ].map((c) => (
+            <article key={c.kpi} className="rounded-xl border border-gray-200 p-6 bg-white shadow-sm">
+              <p className="text-sm font-semibold">{c.kpi}</p>
+              <p className="text-sm text-gray-500">{c.company}</p>
+              <p className="mt-2 text-sm text-gray-700">{c.blurb}</p>
+            </article>
+          ))}
+        </div>
+      </SectionWrapper>
+
+      <SectionWrapper
+        id="testimonials"
+        title="Testimonials"
+        subtitle="What partners say about working with us."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            {
+              quote: 'The team delivered measurable impact in weeks, not months—our customers noticed immediately.',
+              name: 'VP of Support, Consumer App'
+            },
+            {
+              quote: 'They balanced safety and speed perfectly. The automation ROI was undeniable.',
+              name: 'Head of Ops, Fintech'
+            },
+          ].map((t, i) => (
+            <blockquote key={i} className="rounded-xl border border-gray-200 p-6 bg-white shadow-sm">
+              <p className="text-sm text-gray-800">“{t.quote}”</p>
+              <p className="mt-3 text-xs text-gray-500">{t.name}</p>
+            </blockquote>
+          ))}
+        </div>
+      </SectionWrapper>
+    </div>
   );
 }
