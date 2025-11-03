@@ -34,7 +34,7 @@ export default function BookingSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
         <div className="max-w-2xl">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Book a Call</h2>
-          <p className="mt-2 text-black/70">Pick a time that works for you — well send a calendar invite and confirmation instantly.</p>
+          <p className="mt-2 text-black/70">Pick a time that works for you — we'll send a calendar invite and confirmation instantly.</p>
         </div>
 
         <motion.div

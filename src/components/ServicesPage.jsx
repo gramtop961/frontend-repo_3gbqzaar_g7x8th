@@ -17,6 +17,11 @@ const tiles = [
   'Survey CSAT', 'Lead Capture', 'CRM Sync', 'Ticket Sync', 'Webhooks', 'Automation'
 ];
 
+const crms = [
+  'Open Dental', 'Dentrix', 'Eaglesoft', 'Salesforce', 'HubSpot', 'Zendesk', 'Freshdesk', 'Zoho',
+  'Pipedrive', 'Microsoft Dynamics', 'Intercom', 'Front'
+];
+
 export default function ServicesPage() {
   return (
     <main className="bg-white">
@@ -27,6 +32,16 @@ export default function ServicesPage() {
             <p className="mt-2 text-black/70 max-w-prose">Modular capabilities designed to integrate with your stack and scale with your needs.</p>
           </div>
           <a href="/#book" className="inline-flex items-center rounded-full bg-black text-white px-5 py-2.5 text-sm font-semibold hover:opacity-90">Schedule a Call</a>
+        </div>
+
+        {/* Monochrome CRM badges */}
+        <div className="mt-8">
+          <h2 className="text-sm uppercase tracking-widest text-black/60">CRM & Platform Integrations</h2>
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+            {crms.map((n) => (
+              <span key={n} className="px-3 py-1 rounded-full border border-black/10 text-black bg-white">{n}</span>
+            ))}
+          </div>
         </div>
 
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
