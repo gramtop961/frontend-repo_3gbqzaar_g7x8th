@@ -7,7 +7,7 @@ export default function Hero() {
     <section id="home" className="relative overflow-hidden">
       {/* Spline 3D background (no negative z-index) */}
       <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/41MGRk-UDPKO-l6W/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+        <Spline scene="https://prod.spline.design/8nsoLg1te84JZcE9/scene.splinecode" style={{ width: '100%', height: '100%' }} />
       </div>
 
       {/* Gradient overlays for contrast, never blocking 3D interactions */}
