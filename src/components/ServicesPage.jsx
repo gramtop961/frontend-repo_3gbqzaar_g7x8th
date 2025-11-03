@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Bot, Shield, Workflow, PhoneCall, Calendar, PieChart } from 'lucide-react';
+import { Bot, Shield, Settings, PhoneCall, Calendar, PieChart } from 'lucide-react';
 
 const services = [
   { title: 'AI Voice Agent', icon: Bot, desc: 'Answers calls, qualifies leads, books and reschedules — 24/7 with guardrails.' },
   { title: 'Security & Privacy', icon: Shield, desc: 'Granular access, encryption, and audit-ready logging. Built for compliance.' },
-  { title: 'Workflow Automation', icon: Workflow, desc: 'Follow-ups, reminders, approvals, and reporting with human-in-the-loop.' },
+  { title: 'Workflow Automation', icon: Settings, desc: 'Follow-ups, reminders, approvals, and reporting with human-in-the-loop.' },
   { title: 'Call Intelligence', icon: PhoneCall, desc: 'Transcripts, sentiment, and outcomes piped into your CRM for action.' },
   { title: 'Smart Scheduling', icon: Calendar, desc: 'Real-time availability, waitlist fill, and no-show recovery across channels.' },
 ];
